@@ -55,7 +55,7 @@ Ebf = []
 Ebr = []
 
 trans = run(middle, 1)
-write_csv(0)
+write_csv(1)
 for i in range(2, h*2):
     print(trans)
     trans = run(trans, i)
