@@ -36,10 +36,10 @@ def find_middle(size):
             break
     return i
 
-def generate_neb(size, index):
+def generate_neb(size, index, layer_number):
     # read in our relaxed structure
     diamond = read('diamond_rel.lammpstrj', index='-1') # do we need the index?
-    bond_distance = 0.95 / 2 # may be worth checking if this is the right value
+    bond_distance = 1.554 / 2 # may be worth checking if this is the right value
     nl = neighbourlist([bond_distance] * len(diamond), self_interaction=False, bothways=True)
     nl.update(diamond)
     # we have our index that we are concerned with, now want its neighbours
@@ -57,12 +57,16 @@ def generate_neb(size, index):
     finish = diamond.copy()
     # normal start structure
     del(diamond[index])
-    write('1.data', diamond, format='lammps-data')
-    
+    # vacancy is lower
+    write(f'1.data', diamond, format='lammps-data')
+    write(f'{layer_number * 2 - 1}.xyz', diamond)
+
     # move trans atom onto vacancy atom, then delete vacancy atom so indices don't get fucked up
     pos[trans] = pos_vacancy
     finish.set_positions(pos)
     del(finish[index])
-    write('2.data', finish, format='lammps-data') 
-    
+    # vacancy is now higher
+    write(f'2.data', finish, format='lammps-data') 
+    write(f'{layer_number * 2}.xyz', finish)
+
     return trans
