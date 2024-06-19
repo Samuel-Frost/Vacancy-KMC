@@ -10,7 +10,7 @@ import csv
 #
 #print(index)
 #print(coords)
-def convert(name='1'):
+def convert(name='2'):
     diamond = read(f'{name}_rel.lammpstrj', index='-1')
     coords = diamond.get_positions()
 
