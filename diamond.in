@@ -1,0 +1,27 @@
+variable init string """units metal &
+boundary p p p &
+atom_style_atomic"""
+#${init} # this all almost works but not quite
+# make this file basically a callable function for a pyhton script to run with string replacements
+units metal
+boundary p p p 
+atom_style atomic
+
+atom_modify map yes
+
+read_data diamond.data
+labelmap atom 1 C
+mass 1 12.01
+
+pair_style pace
+pair_coeff * * c_ace.yace C
+
+thermo 10
+
+min_style hftn
+#min_style fire
+
+dump 1 all custom 10000 diamond_rel.lammpstrj id type x y z # dump 1st and last
+minimize 1e-20 1e-20 1000 1000
+write_data diamond_rel.data
+

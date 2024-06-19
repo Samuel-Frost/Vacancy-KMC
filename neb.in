@@ -1,0 +1,31 @@
+units metal
+boundary p p p 
+atom_style atomic
+
+atom_modify map yes
+
+read_data 1_rel.data
+labelmap atom 1 C
+mass 1 12.01
+
+
+pair_style pace
+pair_coeff * * c_ace.yace C
+
+thermo 1
+
+min_style fire
+#group nebatoms type 1
+fix 1 all neb 1 parallel ideal
+
+#variable u uloop 10
+#dump 1 all atom 10 dump_5.neb.$u
+
+
+variable	u uloop 20
+
+dump		1 all atom 100 dump.neb.$u
+
+
+dump myDump all custom 100 neb.lammpstrj id type x y z # dump 1st and last
+neb 1e-10 1e-10 1000 1000 1 final 2_final.data verbosity terse
