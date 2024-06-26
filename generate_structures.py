@@ -12,7 +12,7 @@ from ase import Atoms
 centre = 5
 
 def generate_diamond(size):
-    a = 3.57
+    a = 3.573211
     diamond = crystal('C', [(0, 0, 0)], size=size, spacegroup=227, cellpar=[a,a,a,90,90,90]) 
     diamond.center(5, 2)
     # is it worth just getting it working again first and then doing all the naming bollocks
