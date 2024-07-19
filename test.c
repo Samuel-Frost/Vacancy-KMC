@@ -106,6 +106,10 @@ bool get_reached_surface(struct kmc_data *data) {
     return data->reached_surface;
 }
 
+void free_kmc(struct kmc_data *data) {
+    free(data);
+}
+
 int main(double* array) {
     // just defining all the constants at the start, they are NOT technically
     // constant so we can't define them globally normally because
