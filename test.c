@@ -7,10 +7,10 @@
 // global variables, some should maybe be constants instead
 #define timeout 1000000
 
-float e;
-float kB;
+double e;
+double kB;
 double nu;
-float T;
+double T;
 float bulk_r;
 double* energies;
 double surface_distance;
@@ -29,7 +29,6 @@ float get_r(bool direction, int distance) {
      * return rate of migration either up(0), or down(1), depending on distance
      * distance 0 is when we start to see the strain field!
     */
-    float E;
     if (distance >= 0) {
         // should pass in precalculated values to save doing pow everytime
         return nu * pow(e, -energies[2*distance+direction] / (kB * T));
@@ -62,11 +61,15 @@ float get_t(int distance) {
 
 struct kmc_data *kmc_loop() {
     // return get_r(0, distance);
-    struct kmc_data *data = malloc(sizeof(struct kmc_data)); 
+    struct kmc_data *data = malloc(sizeof(struct kmc_data));
+    if (data == NULL) {
+        printf("AAAAAAAAAAAH\n");
+    } 
     data->times[0] = 0;
-    data->distances[0] = 0;
+    data->distances[0] = -200;
     data->reached_surface = 0;
-    for (int i = 1; i < timeout; i++) {
+    size_t i = 0;
+    for (i = 1; i < timeout; i++) {
         double last_distance = data->distances[i-1];
         double last_time = data->times[i-1];
 
@@ -78,15 +81,14 @@ struct kmc_data *kmc_loop() {
             data->distances[i] = last_distance - 1;
         }
         if (data->distances[i] >= surface_distance) {
-            data->size = i;
             data->reached_surface = 1;
             break;
         }
-        if (data->times[i] >= max_time || i == timeout) {
-            data->size = i;
+        if (data->times[i] >= max_time) {
             break;
         }
     }
+    data->size = i;
     return data;
 }
 
@@ -119,10 +121,10 @@ int main(double* array) {
     energies = array;
     e = 2.71828;
     kB = 8.6173303 * pow(10, -5);
-    T = 800;
+    T = 1400;
     nu = 40 * pow(10, 12); // this might not be a good idea
     bulk_r = nu * pow(e, -2.55/(kB*T));
     surface_distance = 19; //double check
-    max_time = 100*3600;
+    max_time = 20 * 60;
     return 0;
 }
