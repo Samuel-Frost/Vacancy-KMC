@@ -1,3 +1,4 @@
+To compile the C code do `$ gcc -shared -o example.so -fPIC test.c`
 ### TODO:
 * Make it so that the final image of the last neb is the initial image of the next neb, this will also fix any indexing issues.
 * Write a quick function that just makes a vacancy in a given layer so that you could start the run from any height, 
