@@ -10,7 +10,7 @@ At 1000K 6003 out of 10,000 vacancies reach the surface, quite impressive.
 
 ![alt text](1000k.png)
 
-When running at 1400K for only 20 minutes, out of 1000 vacancies are destroyed by reaching the surface, practically all of them!
+When running at 1400K for only 2 minutes, 938 out of 1000 vacancies are destroyed by reaching the surface, practically all of them!
 
 ![alt text](1400K.png)
 
