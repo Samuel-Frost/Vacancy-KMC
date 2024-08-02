@@ -1,0 +1,29 @@
+variable init string """units metal &
+boundary p p p &
+atom_style_atomic"""
+#${init} # this all almost works but not quite
+# make this file basically a callable function for a pyhton script to run with string replacements
+units metal
+boundary p p p 
+atom_style atomic
+
+atom_modify map yes
+
+read_data test.data
+labelmap atom 1 C
+mass 1 12.01
+
+pair_style pace
+pair_coeff * * c_ace.yace C
+
+
+min_style hftn
+#min_style fire
+
+#compute pe all pe
+variable pe equal pe 
+
+#dump 1 all custom 1 test.lammpstrj c_pe # dump 1st and last
+fix 1 all print 1 "${pe}" append file.txt title "" 
+#thermo 0
+run 0
