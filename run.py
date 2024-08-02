@@ -7,9 +7,11 @@ from os import system as sys
 import numpy as np
 import matplotlib.pyplot as plt
 import csv
+from combine import combine
 
-size = [5, 5, 5]
-h = size[2] # system is h * 4 tall, middle is h*2, so get h*2 worth of transitions
+size = [8, 8, 16]
+h = size[2] # system is h * 4 tall, middle is h*2, so get h*2-2 worth of transitions
+# goes from 1 -> h*2 - 1
 
 print("GENERATING INITIAL DIAMOND")
 generate_diamond(size)
@@ -66,4 +68,6 @@ for i in range(2, h*2):
 plt.style.use('seaborn-v0_8')
 plt.plot(Ebf)
 plt.plot(Ebr)
-plt.savefig('convergence.png', dpi=600)
+plt.savefig('8x8x16.png', dpi=600)
+
+combine(h[2]*2, '8x8x16')
